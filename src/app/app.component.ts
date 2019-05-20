@@ -17,9 +17,19 @@ export class AppComponent {
     this.initializeApp();
   }
 
+  // initializeApp() {
+  //   this.platform.ready().then(() => {
+  //     this.statusBar.styleDefault();
+  //     this.splashScreen.hide();
+  //   });
+  // }
+
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleLightContent();
+      if (this.platform.is('android')) {
+        this.statusBar.backgroundColorByHexString('#074f8b');
+      }
       this.splashScreen.hide();
     });
   }
