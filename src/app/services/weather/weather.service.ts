@@ -14,8 +14,8 @@ import { UVIndex } from 'src/app/models/uv-index';
 export class WeatherService {
   constructor(private http: HttpClient) { }
 
-  private latitude = 43.073051;
-  private longitude = -89.401230;
+  private latitude = 28.149300;
+  private longitude = -82.460747;
 
   current(): Observable<Weather> {
     return this.http.get(

@@ -19,6 +19,9 @@ describe('WeatherService', () => {
     httpTestingController = TestBed.get(HttpTestingController);
   });
 
+  const testLat = 28.149300;
+  const testLong = -82.460747;
+
   it('should be created', () => {
     const service: WeatherService = TestBed.get(WeatherService);
     expect(service).toBeTruthy();
@@ -29,7 +32,7 @@ describe('WeatherService', () => {
       const service: WeatherService = TestBed.get(WeatherService);
       service.current().subscribe();
       const req = httpTestingController.expectOne(
-        `${environment.baseUrl}/weather?lat=43.073051&lon=-89.40123&appid=${
+        `${environment.baseUrl}/weather?lat=${testLat}&lon=${testLong}&appid=${
           environment.appId
         }`
       );
@@ -42,7 +45,7 @@ describe('WeatherService', () => {
       let weather: Weather;
       service.current().subscribe(w => (weather = w));
       const req = httpTestingController.expectOne(
-        `${environment.baseUrl}/weather?lat=43.073051&lon=-89.40123&appid=${
+        `${environment.baseUrl}/weather?lat=${testLat}&lon=${testLong}&appid=${
           environment.appId
         }`
       );
@@ -74,7 +77,7 @@ describe('WeatherService', () => {
       const service: WeatherService = TestBed.get(WeatherService);
       service.forecast().subscribe();
       const req = httpTestingController.expectOne(
-        `${environment.baseUrl}/forecast?lat=43.073051&lon=-89.40123&appid=${
+        `${environment.baseUrl}/forecast?lat=${testLat}&lon=${testLong}&appid=${
           environment.appId
         }`
       );
@@ -87,7 +90,7 @@ describe('WeatherService', () => {
       let forecast: Forecast;
       service.forecast().subscribe(f => (forecast = f));
       const req = httpTestingController.expectOne(
-        `${environment.baseUrl}/forecast?lat=43.073051&lon=-89.40123&appid=${
+        `${environment.baseUrl}/forecast?lat=${testLat}&lon=${testLong}&appid=${
           environment.appId
         }`
       );
@@ -176,7 +179,7 @@ describe('WeatherService', () => {
       },
         {
         temperature: 279.42,
-        condition:342,
+        condition: 342,
         date: new Date(1485907200 * 1000)
       },
       ]]);
@@ -188,7 +191,7 @@ describe('WeatherService', () => {
       const service: WeatherService = TestBed.get(WeatherService);
       service.uvIndex().subscribe();
       const req = httpTestingController.expectOne(
-        `${environment.baseUrl}/uvi?lat=43.073051&lon=-89.40123&appid=${
+        `${environment.baseUrl}/uvi?lat=${testLat}&lon=${testLong}&appid=${
           environment.appId
         }`
       );
@@ -200,7 +203,7 @@ describe('WeatherService', () => {
       const service: WeatherService = TestBed.get(WeatherService);
       service.uvIndex().subscribe();
       const req = httpTestingController.expectOne(
-        `${environment.baseUrl}/uvi?lat=43.073051&lon=-89.40123&appid=${
+        `${environment.baseUrl}/uvi?lat=${testLat}&lon=${testLong}&appid=${
           environment.appId
         }`
       );
@@ -209,10 +212,7 @@ describe('WeatherService', () => {
     });
 
       [
-        {
-          value: 2.9,
-          riskLevel: 0
-        },
+        {value: 2.9, riskLevel: 0},
         {
           value: 3,
           riskLevel: 1
@@ -233,9 +233,9 @@ describe('WeatherService', () => {
         it(`transforms the data - level: ${test.riskLevel}`, () => {
           let uvIndex: UVIndex;
           const service: WeatherService = TestBed.get(WeatherService);
-          service.uvIndex().subscribe(u=>uvIndex = u);
+          service.uvIndex().subscribe(u => uvIndex = u);
           const req = httpTestingController.expectOne(
-            `${environment.baseUrl}/uvi?lat=43.073051&lon=-89.40123&appid=${
+            `${environment.baseUrl}/uvi?lat=${testLat}&lon=${testLong}&appid=${
               environment.appId
             }`
           );
