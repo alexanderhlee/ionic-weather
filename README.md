@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ionic Weather Starter
 
 A starter application for the Ionic v4 enterprise training.
@@ -20,3 +21,6 @@ If you want to use this starter outside of that environment for some reason, do 
 
 Happy Coding!!
 
+=======
+# ionic-weather
+>>>>>>> b3c8697acf9dde86e9031bbeacc6e9a364319f38
