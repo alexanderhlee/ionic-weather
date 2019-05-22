@@ -29,7 +29,8 @@ export class WeatherService {
     return {
       temperature: res.main.temp,
       condition: res.weather[0].id,
-      date: new Date(res.dt * 1000)
+      date: new Date(res.dt * 1000),
+      name: res.name
     };
   }
 

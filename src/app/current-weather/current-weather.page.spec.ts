@@ -42,13 +42,15 @@ describe('CurrentWeatherPage', () => {
       weather.current.and.returnValue(of({
         temperature: 280.32,
         condition: 300,
-        date: new Date(1485789600 * 1000)
+        date: new Date(1485789600 * 1000),
+        name: 'Las Vegas'
       }));
       component.ionViewDidEnter();
       expect(component.currentWeather).toEqual({
         temperature: 280.32,
         condition: 300,
-        date: new Date(1485789600 * 1000)
+        date: new Date(1485789600 * 1000),
+        name: 'Las Vegas'
       });
     });
   });

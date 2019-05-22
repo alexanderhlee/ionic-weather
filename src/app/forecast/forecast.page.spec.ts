@@ -13,6 +13,9 @@ describe('ForecastPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ForecastPage],
+      providers: [
+        {provide: WeatherService, useFactory: createWeatherServiceMock}
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
@@ -26,7 +29,7 @@ describe('ForecastPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
   describe('entering the page', () => {
     it('gets the forecast', () => {
       const weather =  TestBed.get(WeatherService);

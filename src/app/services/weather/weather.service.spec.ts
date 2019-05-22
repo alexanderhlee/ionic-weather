@@ -61,13 +61,15 @@ describe('WeatherService', () => {
         main: {
           temp: 280.32
         },
-        dt: 1485789600
+        dt: 1485789600,
+        name: 'Las Vegas'
       });
       httpTestingController.verify();
       expect(weather).toEqual({
         temperature: 280.32,
         condition: 300,
-        date: new Date(1485789600 * 1000)
+        date: new Date(1485789600 * 1000),
+        name: 'Las Vegas'
       });
     });
   });
@@ -98,6 +100,7 @@ describe('WeatherService', () => {
         list: [
           {
             dt: 1485799200,
+            name: 'Las Vegas',
             main: {
               temp: 283.76
             },
@@ -109,6 +112,7 @@ describe('WeatherService', () => {
           },
           {
             dt: 1485810000,
+            name: 'Las Vegas',
             main: {
               temp: 282.56
             },
@@ -120,6 +124,7 @@ describe('WeatherService', () => {
           },
           {
             dt: 1485820800,
+            name: 'Las Vegas',
             main: {
               temp: 282.3
             },
@@ -131,6 +136,7 @@ describe('WeatherService', () => {
           },
           {
             dt: 1485896400,
+            name: 'Las Vegas',
             main: {
               temp: 280.3
             },
@@ -142,6 +148,7 @@ describe('WeatherService', () => {
           },
           {
             dt: 1485907200,
+            name: 'Las Vegas',
             main: {
               temp: 279.42
             },
@@ -158,29 +165,34 @@ describe('WeatherService', () => {
         {
         temperature: 283.76,
         condition: 800,
-        date: new Date(1485799200 * 1000)
+        date: new Date(1485799200 * 1000),
+        name: 'Las Vegas'
       },
         {
         temperature: 282.56,
         condition: 800,
-        date: new Date(1485810000 * 1000)
+        date: new Date(1485810000 * 1000),
+        name: 'Las Vegas'
       },
         {
         temperature: 282.3,
         condition: 800,
-        date: new Date(1485820800 * 1000)
+        date: new Date(1485820800 * 1000),
+        name: 'Las Vegas'
       }
       ],
       [
         {
         temperature: 280.3,
         condition: 340,
-        date: new Date(1485896400 * 1000)
+        date: new Date(1485896400 * 1000),
+        name: 'Las Vegas'
       },
         {
         temperature: 279.42,
         condition: 342,
-        date: new Date(1485907200 * 1000)
+        date: new Date(1485907200 * 1000),
+        name: 'Las Vegas'
       },
       ]]);
     });

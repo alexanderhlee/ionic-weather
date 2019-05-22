@@ -14,6 +14,9 @@ describe('UvIndexPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UvIndexPage],
+      providers: [
+        {provide: WeatherService, useFactory: createWeatherServiceMock}
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
@@ -32,12 +35,12 @@ describe('UvIndexPage', () => {
     it('gets the uv index', () => {
       const weather =  TestBed.get(WeatherService);
       component.ionViewDidEnter();
-      expect(weather.uvindex).toHaveBeenCalledTimes(1);
+      expect(weather.uvIndex).toHaveBeenCalledTimes(1);
     });
 
     it('assigns the uv index', () => {
       const weather =  TestBed.get(WeatherService);
-      weather.uvindex.and.returnValue(of( {
+      weather.uvIndex.and.returnValue(of( {
         value: 4,
         riskLevel: 3
       }));
