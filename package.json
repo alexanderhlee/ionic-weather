@@ -13,7 +13,8 @@
     "e2e": "ng e2e",
     "test": "ng test --browsers=ChromeHeadless",
     "test:debug": "ng test",
-    "test:ci": "ng test --no-watch --browsers=ChromeHeadlessCI"
+    "test:ci": "ng test --no-watch --browsers=ChromeHeadlessCI",
+    "build:web": "ionic build --engine=browser --prod"
   },
   "private": true,
   "dependencies": {
