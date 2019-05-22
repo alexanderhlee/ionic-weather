@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController
@@ -9,18 +9,29 @@ import {Forecast} from '../../models/forecast';
 import { environment } from '../../../environments/environment';
 import { WeatherService } from './weather.service';
 import { UVIndex } from 'src/app/models/uv-index';
+import { LocationService } from '../location/location.service';
+import { createLocationServiceMock } from '../location/location.service.mock';
 
 describe('WeatherService', () => {
+  const testLat = 28.149300;
+  const testLong = -82.460747;
+
   let httpTestingController: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: LocationService, useFactory: createLocationServiceMock }
+      ]
     });
     httpTestingController = TestBed.get(HttpTestingController);
+    const loc = TestBed.get(LocationService);
+    loc.current.and.returnValue(
+      Promise.resolve({ latitude: testLat, longitude: testLong })
+    );
   });
 
-  const testLat = 28.149300;
-  const testLong = -82.460747;
+
 
   it('should be created', () => {
     const service: WeatherService = TestBed.get(WeatherService);
@@ -28,22 +39,65 @@ describe('WeatherService', () => {
   });
 
   describe('current', () => {
-    it('gets the current weather data from the server', () => {
+    it('gets the current location', () => {
+      const loc = TestBed.get(LocationService);
       const service: WeatherService = TestBed.get(WeatherService);
       service.current().subscribe();
+      expect(loc.current).toHaveBeenCalledTimes(1);
+    });
+
+    it('gets the data from the server', fakeAsync(() => {
+      const service: WeatherService = TestBed.get(WeatherService);
+      service.current().subscribe();
+      tick();
       const req = httpTestingController.expectOne(
-        `${environment.baseUrl}/weather?lat=${testLat}&lon=${testLong}&appid=${
+        `${environment.baseUrl}/weather?lat=${testLat}&lon=${testLong}9&appid=${
           environment.appId
         }`
       );
       expect(req.request.method).toEqual('GET');
       httpTestingController.verify();
-    });
+    }));
 
-    it('transforms the current weather data', () => {
+    // it('transforms the current weather data', () => {
+    //   const service: WeatherService = TestBed.get(WeatherService);
+    //   let weather: Weather;
+    //   service.current().subscribe(w => (weather = w));
+    //   tick();
+    //   const req = httpTestingController.expectOne(
+    //     `${environment.baseUrl}/weather?lat=${testLat}&lon=${testLong}&appid=${
+    //       environment.appId
+    //     }`
+    //   );
+    //   req.flush({
+    //     weather: [
+    //       {
+    //         id: 300
+    //       },
+    //       {
+    //         id: 420
+    //       }
+    //     ],
+    //     main: {
+    //       temp: 280.32
+    //     },
+    //     dt: 1485789600,
+    //     name: 'Las Vegas'
+    //   });
+    //   httpTestingController.verify();
+    //   expect(weather).toEqual({
+    //     temperature: 280.32,
+    //     condition: 300,
+    //     date: new Date(1485789600 * 1000),
+    //     name: 'Las Vegas'
+    //   });
+    // });
+
+    it('transforms the data', fakeAsync (() => {
       const service: WeatherService = TestBed.get(WeatherService);
       let weather: Weather;
       service.current().subscribe(w => (weather = w));
+      tick();
       const req = httpTestingController.expectOne(
         `${environment.baseUrl}/weather?lat=${testLat}&lon=${testLong}&appid=${
           environment.appId
@@ -71,8 +125,9 @@ describe('WeatherService', () => {
         date: new Date(1485789600 * 1000),
         name: 'Las Vegas'
       });
-    });
+    }));
   });
+
 
   describe('forecast', () => {
     it('gets the forecast data from the server', () => {
